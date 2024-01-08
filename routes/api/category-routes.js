@@ -8,13 +8,13 @@ router.get('/', async (req, res) => {
   // find all categories
   // be sure to include its associated Products
   try {
-    const foundProducts = await Category.findAll({
+    const foundCategory = await Category.findAll({
       include: [{
         model: Product,
       }]
     });
 
-    res.json(foundProducts);
+    res.json(foundCategory);
   }
   catch (err) {
     res.json(err.message);
@@ -32,7 +32,7 @@ router.get('/:id', async (req, res) => {
       }]
     });
     if (!articleData) {
-      res.status(404).json({message: 'No user found!'});
+      res.status(404).json({message: 'No category found!'});
       return;
     }
     res.status(200);
