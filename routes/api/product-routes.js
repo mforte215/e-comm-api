@@ -120,8 +120,29 @@ router.put('/:id', (req, res) => {
     });
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   // delete one product by its `id` value
+  try {
+    const foundProduct = await Product.findByPk(req.params.id);
+    if (!foundProduct) {
+      res.status(400).json('NO category with that ID found')
+    }
+    else {
+      //check if it's a category object
+      if (foundProduct instanceof Product) {
+        const didDestroy = await foundProduct.destroy();
+
+        res.status(200).json(`SUCCESSFULLY DELETED TAG ${didDestroy.product_name}`);
+      }
+      else {
+        res.status(400).json('ERROR: Something went wrong. Try again')
+      }
+    }
+
+  }
+  catch (err) {
+    res.status(400).json(err.message);
+  }
 });
 
 module.exports = router;
