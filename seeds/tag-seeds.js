@@ -29,4 +29,4 @@ const tagData = [
 
 const seedTags = () => Tag.bulkCreate(tagData);
 
-seedTags();
+module.exports = seedTags;
